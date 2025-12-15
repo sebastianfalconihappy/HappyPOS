@@ -1,10 +1,11 @@
-import LoginPage from "../domains/auth/pages/LoginPage";
+import AppRoutes from "../routes";
+import { AuthProvider } from "./providers/AuthProvider";
 
 function App() {
   return (
-    <div className="min-h-screen text-white">
-      <LoginPage />
-    </div>
+    <AuthProvider>
+      <AppRoutes />
+    </AuthProvider>
   );
 }
 
