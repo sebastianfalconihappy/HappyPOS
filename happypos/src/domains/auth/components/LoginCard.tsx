@@ -5,7 +5,7 @@ import { useAuthContext } from "../../../app/providers/AuthProvider";
 
 import Input from "../../../shared/ui/Input";
 import Button from "../../../shared/ui/Button";
-import logo from "../../../assets/images/logoHappy.png";
+import logo from "../../../assets/images/logo5.png";
 
 
 export default function LoginCard() {

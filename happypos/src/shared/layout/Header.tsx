@@ -1,5 +1,5 @@
 import { useAuthContext } from "../../app/providers/AuthProvider";
-import logo from "../../assets/images/logoHappy.png";
+import logo5 from "../../assets/images/logo5.png";
 import { useNavigate } from "react-router-dom";
 
 export default function Header() {
@@ -20,7 +20,7 @@ export default function Header() {
       {/* IZQUIERDA: LOGO */}
       <div className="flex items-center gap-3">
         <img
-          src={logo}
+          src={logo5}
           alt="HappyPOS"
           className="w-9 h-9 rounded-md"
         />

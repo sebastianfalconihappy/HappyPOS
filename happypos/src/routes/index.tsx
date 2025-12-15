@@ -1,6 +1,6 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LoginPage from "../domains/auth/pages/LoginPage";
-import DashboardPage from "../domains/auth/pages/DashboardPage";
+import DashboardPage from "../domains/products/pages/DashboardPage";
 
 export default function AppRoutes() {
   return (
