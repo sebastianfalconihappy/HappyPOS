@@ -38,7 +38,7 @@ export default function LoginCard() {
       });
 
       // 3️⃣ Redirigir al dashboard
-      navigate("/check-in");
+      navigate("/dashboard");
     } catch (err) {
       setError("Usuario o contraseña incorrectos");
     } finally {
