@@ -1,8 +1,7 @@
-// src/shared/layout/CategoriesSidebar.tsx
 import {
   Smartphone,
   Headphones,
-  Package,
+  // Package,
   Layers,
 } from "lucide-react";
 
@@ -13,12 +12,11 @@ type Props = {
 
 const categories = [
   { id: "all", label: "Todos", icon: Layers },
-  { id: "phones", label: "Teléfonos más vendidos", icon: Smartphone },
-  { id: "accessories", label: "Accesorios más vendidos", icon: Headphones },
-  { id: "combos", label: "Combos", icon: Package },
-  { id: "kit", label: "Kits", icon: Package },
-  { id: "phones2", label: "Teléfonos", icon: Smartphone },
-  { id: "accessories2", label: "Accesorios", icon: Headphones },
+  { id: "celulares", label: "Celulares más vendidos", icon: Smartphone },
+  { id: "productos", label: "Productos más vendidos", icon: Headphones },
+  // { id: "combos", label: "Combos", icon: Package },
+  { id: "celulares2", label: "Celulares", icon: Smartphone },
+  { id: "tablets", label: "Tablets", icon: Smartphone },
 ];
 
 export default function CategoriesSidebar({

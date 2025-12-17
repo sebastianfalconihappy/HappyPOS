@@ -1,13 +1,12 @@
-export type ProductCategory = "phones" | "accessories" | "combos" | "unknown";
+export type ProductCategory = "phones" | "accessories" | "combos";
 
 export interface Product {
-  id: string;            
+  id: string;              
   name: string;
-  brand?: string;
-  category: ProductCategory;
-  codigoBarra: string;
-  imei: string | null;
+  code: string;
+  imei: string;
   price: number;
   stock: number;
   image: string;
+  category: ProductCategory;
 }

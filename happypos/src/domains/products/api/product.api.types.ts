@@ -1,7 +1,7 @@
 export interface ApiProduct {
   Codigo: string;
   Descripcion: string;
-  imei: string | null;
+  imei: string;
   stock: number;
   precio: number;
   url: string | null;
