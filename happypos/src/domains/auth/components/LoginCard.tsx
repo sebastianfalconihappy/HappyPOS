@@ -7,12 +7,10 @@ import Input from "../../../shared/ui/Input";
 import Button from "../../../shared/ui/Button";
 import logo from "../../../assets/images/logo5.png";
 
-
 export default function LoginCard() {
   const navigate = useNavigate();
   const { signIn } = useAuth();
   const { login } = useAuthContext();
-
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -20,36 +18,33 @@ export default function LoginCard() {
   const [error, setError] = useState("");
 
   async function handleLogin() {
-  setError("");
-  setLoading(true);
+    setError("");
+    setLoading(true);
 
-  try {
-    
-    await signIn(username, password);
+    try {
+      await signIn(username, password);
 
-    login({
-      user: {
-        name: username,
-        role: "Cajero",          
-      },
-      branch: {
-        name: "Sucursal Centro", 
-      },
-      cashRegister: {
-        name: "Caja 1",          
-      },
-    });
+      login({
+        user: {
+          name: username,
+          role: "Cajero",
+        },
+        branch: {
+          name: "Sucursal Centro",
+        },
+        cashRegister: {
+          name: "Caja 1",
+        },
+      });
 
-    // 3️⃣ Redirigir al dashboard
-    navigate("/dashboard");
-
-  } catch (err) {
-    setError("Usuario o contraseña incorrectos");
-  } finally {
-    setLoading(false);
+      // 3️⃣ Redirigir al dashboard
+      navigate("/check-in");
+    } catch (err) {
+      setError("Usuario o contraseña incorrectos");
+    } finally {
+      setLoading(false);
+    }
   }
-}
-
 
   return (
     <div
@@ -59,31 +54,28 @@ export default function LoginCard() {
     >
       {/* LOGO */}
       <div className="flex flex-col items-center mb-6">
-        <img
-          src={logo}
-          alt="HappyPOS"
-          className="w-16 h-16 mb-3 rounded-xl"
-        />
+        <img src={logo} alt="HappyPOS" className="w-16 h-16 mb-3 rounded-xl" />
 
-        <h1 className="text-2xl font-semibold text-slate-900">
-          HappyPOS
-        </h1>
-        <p className="text-sm text-slate-500">
-          Sistema POS HappyCell
-        </p>
+        <h1 className="text-2xl font-semibold text-slate-900">HappyPOS</h1>
+        <p className="text-sm text-slate-500">Sistema POS HappyCell</p>
       </div>
 
-      <div className="flex items-center justify-center gap-2
-        bg-slate-100 rounded-lg py-2 mb-4">
+      <div
+        className="flex items-center justify-center gap-2
+        bg-slate-100 rounded-lg py-2 mb-4"
+      >
         <span className="text-slate-600">👤</span>
-        <span className="text-sm font-medium text-slate-700">
-          Usuario
-        </span>
+        <span className="text-sm font-medium text-slate-700">Usuario</span>
       </div>
-
 
       {/* FORM */}
-      <div className="space-y-4">
+      <form
+        className="space-y-4"
+        onSubmit={(e) => {
+          e.preventDefault();
+          handleLogin();
+        }}
+      >
         <Input
           label="Usuario"
           placeholder="Ingresa tu usuario"
@@ -99,16 +91,12 @@ export default function LoginCard() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        {error && (
-          <p className="text-sm text-red-600 text-center">
-            {error}
-          </p>
-        )}
+        {error && <p className="text-sm text-red-600 text-center">{error}</p>}
 
-        <Button onClick={handleLogin}>
+        <Button type="submit">
           {loading ? "Validando..." : "→ Iniciar Sesión"}
         </Button>
-      </div>
+      </form>
     </div>
   );
 }
