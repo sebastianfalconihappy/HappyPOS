@@ -12,10 +12,9 @@ type Props = {
 
 const categories = [
   { id: "all", label: "Todos", icon: Layers },
-  { id: "celulares", label: "Celulares más vendidos", icon: Smartphone },
-  { id: "productos", label: "Productos más vendidos", icon: Headphones },
-  // { id: "combos", label: "Combos", icon: Package },
-  { id: "celulares2", label: "Celulares", icon: Smartphone },
+  { id: "celularesmasv", label: "Celulares más vendidos", icon: Smartphone },
+  { id: "productosmasv", label: "Productos más vendidos", icon: Headphones },
+  { id: "celulares", label: "Celulares", icon: Smartphone },
   { id: "tablets", label: "Tablets", icon: Smartphone },
 ];
 
