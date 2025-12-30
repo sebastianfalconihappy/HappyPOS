@@ -18,13 +18,21 @@ const categories = [
   { id: "tablets", label: "Tablets", icon: Smartphone },
 ];
 
-export default function CategoriesSidebar({
-  active,
-  onChange,
-}: Props) {
+export default function CategoriesSidebar({ active, onChange }: Props) {
   return (
-    <aside className="w-64 p-4 bg-[#0B1220] border-r border-white/10">
-      <h3 className="text-sm text-white/70 mb-4">
+    <aside
+  className="
+    sticky top-16
+    h-[calc(100vh-4rem)]
+    w-64 p-4
+    overflow-y-auto
+
+    bg-white dark:bg-[#0B1220]
+    border-r border-slate-300 dark:border-white/10
+    text-slate-900 dark:text-white
+  "
+>
+      <h3 className="text-sm text-slate-600 dark:text-white/70 mb-4">
         Categorías
       </h3>
 
@@ -42,14 +50,16 @@ export default function CategoriesSidebar({
                 ${
                   isActive
                     ? "bg-gradient-to-r from-purple-600 to-indigo-600 text-white shadow-lg"
-                    : "bg-white/5 text-white/70 hover:bg-white/10"
+                    : `
+      bg-slate-100 dark:bg-white/5
+      text-slate-900 dark:text-white/70
+      hover:bg-slate-200 dark:hover:bg-white/10
+    `
                 }
               `}
             >
               <Icon size={18} />
-              <span className="text-sm font-medium">
-                {label}
-              </span>
+              <span className="text-sm font-medium">{label}</span>
             </button>
           );
         })}

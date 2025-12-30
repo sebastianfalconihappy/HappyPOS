@@ -1,3 +1,38 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* ============================= */
+/* SCROLLBAR PERSONALIZADA */
+/* ============================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; 
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8; 
+}
+
+/* ============================= */
+/* MODO OSCURO */
+/* ============================= */
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #334155; 
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #475569; 
+}
