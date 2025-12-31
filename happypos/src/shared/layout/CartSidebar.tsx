@@ -3,7 +3,7 @@ import { Trash2, X } from "lucide-react";
 import { useCart } from "../../shared/context/useCart";
 import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
-
+import { useNavigate } from "react-router-dom";
 
 export default function CartSidebar() {
   const { cart, removeFromCart, subtotal } = useCart();
@@ -11,7 +11,7 @@ export default function CartSidebar() {
   const [highlight, setHighlight] = useState(false);
   const prevCartLength = useRef(cart.length);
   const [isOpen, setIsOpen] = useState(true);
-
+  const navigate = useNavigate();
 
   const handleRemove = (id: string) => {
     setRemovingId(id);
@@ -44,8 +44,8 @@ export default function CartSidebar() {
   }, [cart.length]);
 
   if (!isOpen || cart.length === 0) {
-  return null;
-}
+    return null;
+  }
 
   return (
     <aside
@@ -65,32 +65,31 @@ export default function CartSidebar() {
   `}
     >
       <div className="flex items-start justify-between mb-4">
-  <div className="flex items-center gap-2">
-    <div className="bg-purple-600 p-2 rounded-lg">🛒</div>
-    <div>
-      <h3 className="font-semibold">Carrito</h3>
-      <p className="text-sm text-slate-600 dark:text-white/60">
-        {cart.length} producto{cart.length !== 1 ? "s" : ""}
-      </p>
-    </div>
-  </div>
+        <div className="flex items-center gap-2">
+          <div className="bg-purple-600 p-2 rounded-lg">🛒</div>
+          <div>
+            <h3 className="font-semibold">Carrito</h3>
+            <p className="text-sm text-slate-600 dark:text-white/60">
+              {cart.length} producto{cart.length !== 1 ? "s" : ""}
+            </p>
+          </div>
+        </div>
 
-  {/* ❌ Cerrar carrito */}
-  <button
-    onClick={() => setIsOpen(false)}
-    className="
+        {/* ❌ Cerrar carrito */}
+        <button
+          onClick={() => setIsOpen(false)}
+          className="
       p-1 rounded-md
       text-slate-500 hover:text-slate-700
       dark:text-white/60 dark:hover:text-white
       hover:bg-slate-200 dark:hover:bg-white/10
       transition
     "
-    title="Cerrar carrito"
-  >
-    <X size={18} />
-  </button>
-</div>
-
+          title="Cerrar carrito"
+        >
+          <X size={18} />
+        </button>
+      </div>
 
       {cart.map((product) => (
         <div
@@ -150,6 +149,7 @@ export default function CartSidebar() {
       </div>
 
       <button
+        onClick={() => navigate("/checkout")}
         className="
     w-full mt-4 py-3 rounded-xl font-semibold
     bg-indigo-600 text-white
