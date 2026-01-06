@@ -30,10 +30,10 @@ export default function LoginCard() {
           role: "Cajero",
         },
         branch: {
-          name: "Sucursal Centro",
+          name: "Sucursal Cotocollao",
         },
         cashRegister: {
-          name: "Caja 1",
+          name: "Caja #1",
         },
       });
 
