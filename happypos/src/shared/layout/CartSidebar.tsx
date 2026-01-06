@@ -1,12 +1,12 @@
 // src/shared/layout/CartSidebar.tsx
 import { Trash2, X } from "lucide-react";
-import { useCart } from "../../shared/context/useCart";
+import { useFacturaCart } from "../context/useFacturaCart";
 import { useState, useEffect, useRef } from "react";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 
 export default function CartSidebar() {
-  const { cart, removeFromCart, subtotal } = useCart();
+  const { cart, removeFromCart, subtotal } = useFacturaCart();
   const [removingId, setRemovingId] = useState<string | null>(null);
   const [highlight, setHighlight] = useState(false);
   const prevCartLength = useRef(cart.length);

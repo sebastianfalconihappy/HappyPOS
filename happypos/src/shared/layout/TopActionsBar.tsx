@@ -2,12 +2,14 @@ type Props = {
   onConsultaSolicitud: () => void;
   cotizar: boolean;
   onToggleCotizar: (value: boolean) => void;
+  onNuevaFactura: () => void;
 };
 
 export default function TopActionsBar({
   onConsultaSolicitud,
   cotizar,
   onToggleCotizar,
+  onNuevaFactura,
 }: Props) {
   return (
     <div
@@ -24,15 +26,16 @@ export default function TopActionsBar({
       <div className="flex items-center gap-3">
         {/* Botón + */}
         <button
-          title="Nueva acción"
+          onClick={onNuevaFactura}
+          title="Nueva factura"
           className="
-            w-9 h-9
-            flex items-center justify-center
-            rounded-lg
-            bg-slate-200 dark:bg-slate-700
-            hover:bg-slate-300 dark:hover:bg-slate-600
-            transition
-          "
+    w-9 h-9
+    flex items-center justify-center
+    rounded-lg
+    bg-slate-200 dark:bg-slate-700
+    hover:bg-slate-300 dark:hover:bg-slate-600
+    transition
+  "
         >
           ➕
         </button>

@@ -3,10 +3,12 @@ import ProductsGrid from "../components/ProductsGrid";
 import TopActionsBar from "../../../shared/layout/TopActionsBar";
 import { useState } from "react";
 import ConsultaSolicitudModal from "../../../shared/layout/ConsultaSolicitudModal";
+import { useFacturas } from "../../../shared/context/useFacturas";
 
 export default function DashboardPage() {
   const [openConsulta, setOpenConsulta] = useState(false);
   const [cotizar, setCotizar] = useState(false);
+  const { crearFactura } = useFacturas();
 
   return (
     <DashboardLayout>
@@ -14,6 +16,9 @@ export default function DashboardPage() {
         <div className="flex flex-col gap-6">
           {/* 🟣 NUEVA BARRA */}
           <TopActionsBar
+            onNuevaFactura={() => {
+              crearFactura();
+            }}
             onConsultaSolicitud={() => setOpenConsulta(true)}
             cotizar={cotizar}
             onToggleCotizar={setCotizar}

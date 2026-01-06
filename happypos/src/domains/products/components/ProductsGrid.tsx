@@ -11,7 +11,7 @@ type Props = {
 };
 
 import GlobalLoader from "../../../shared/layout/GlobalLoader";
-import { useCart } from "../../../shared/context/useCart";
+import { useFacturaCart } from "../../../shared/context/useFacturaCart";
 import toast from "react-hot-toast";
 
 const PLACEHOLDER_IMAGE = "/src/assets/images/placeholder.jpg";
@@ -28,7 +28,7 @@ export default function ProductsGrid({ category }: Props) {
   const [priceOrder, setPriceOrder] = useState<"asc" | "desc" | "">("");
   const [onlyInStock, setOnlyInStock] = useState(false);
   const [cache, setCache] = useState<Record<string, Product[]>>({});
-  const { addToCart, cart } = useCart();
+  const { addToCart, cart } = useFacturaCart();
 
   useEffect(() => {
     let isMounted = true;

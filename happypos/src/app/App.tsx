@@ -2,11 +2,14 @@ import AppRoutes from "../routes";
 import { AuthProvider } from "./providers/AuthProvider";
 import { CartProvider } from "../shared/context/CartProvider";
 import { Toaster } from "react-hot-toast";
+import { FacturasProvider } from "../shared/context/FacturasContext";
+
 
 
 function App() {
   return (
     <AuthProvider>
+      <FacturasProvider>
       <CartProvider>
         <AppRoutes />
         <Toaster
@@ -21,6 +24,7 @@ function App() {
           }}
         />
       </CartProvider>
+      </FacturasProvider>
     </AuthProvider>
   );
 }
