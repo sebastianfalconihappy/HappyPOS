@@ -1,15 +1,27 @@
+import type { Factura } from "../context/FacturasContext";
+
 type Props = {
+  facturas: Factura[];
+  facturaActivaId: string | null;
+  onSelectFactura: (id: string) => void;
+
+  onNuevaFactura: () => void;
+  onEliminarFactura: () => void;
+
   onConsultaSolicitud: () => void;
   cotizar: boolean;
   onToggleCotizar: (value: boolean) => void;
-  onNuevaFactura: () => void;
 };
 
 export default function TopActionsBar({
+  facturas,
+  facturaActivaId,
+  onSelectFactura,
+  onNuevaFactura,
+  onEliminarFactura,
   onConsultaSolicitud,
   cotizar,
   onToggleCotizar,
-  onNuevaFactura,
 }: Props) {
   return (
     <div
@@ -22,27 +34,36 @@ export default function TopActionsBar({
         border border-slate-300 dark:border-white/10
       "
     >
-      {/* ⬅️ LADO IZQUIERDO */}
-      <div className="flex items-center gap-3">
-        {/* Botón + */}
-        <button
-          onClick={onNuevaFactura}
-          title="Nueva factura"
-          className="
-    w-9 h-9
-    flex items-center justify-center
-    rounded-lg
-    bg-slate-200 dark:bg-slate-700
-    hover:bg-slate-300 dark:hover:bg-slate-600
-    transition
-  "
-        >
-          ➕
-        </button>
+      {/* ⬅️ LADO IZQUIERDO: selector de facturas */}
+      <div className="flex items-center gap-2">
+        {facturas.map((factura, index) => {
+          const activa = factura.id === facturaActivaId;
 
-        {/* Botón basura */}
+          return (
+            <button
+              key={factura.id}
+              onClick={() => onSelectFactura(factura.id)}
+              className={`
+                px-3 py-1 rounded-lg text-sm transition
+                ${
+                  activa
+                    ? "bg-indigo-600 text-white"
+                    : "bg-slate-200 dark:bg-slate-700 hover:bg-slate-300 dark:hover:bg-slate-600"
+                }
+              `}
+            >
+              Factura {index + 1}
+            </button>
+          );
+        })}
+      </div>
+
+      {/* ➡️ LADO DERECHO: acciones */}
+      <div className="flex items-center gap-4">
+        {/* 🗑️ Cancelar factura */}
         <button
-          title="Limpiar"
+          onClick={onEliminarFactura}
+          title="Cancelar factura"
           className="
             w-9 h-9
             flex items-center justify-center
@@ -54,10 +75,8 @@ export default function TopActionsBar({
         >
           🗑️
         </button>
-      </div>
 
-      {/* ➡️ LADO DERECHO */}
-      <div className="flex items-center gap-6">
+        {/* ☑️ Cotizar */}
         <label className="flex items-center gap-2 text-sm cursor-pointer">
           <input
             type="checkbox"
@@ -68,6 +87,7 @@ export default function TopActionsBar({
           Cotizar
         </label>
 
+        {/* 🧾 Consulta */}
         <button
           onClick={onConsultaSolicitud}
           className="
@@ -79,6 +99,22 @@ export default function TopActionsBar({
           "
         >
           🧾 Consulta Solicitud
+        </button>
+
+        {/* ➕ Nueva factura */}
+        <button
+          onClick={onNuevaFactura}
+          title="Nueva factura"
+          className="
+            w-9 h-9
+            flex items-center justify-center
+            rounded-lg
+            bg-slate-200 dark:bg-slate-700
+            hover:bg-slate-300 dark:hover:bg-slate-600
+            transition
+          "
+        >
+          ➕
         </button>
       </div>
     </div>

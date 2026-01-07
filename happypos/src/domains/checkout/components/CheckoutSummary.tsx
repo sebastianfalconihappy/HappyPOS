@@ -1,11 +1,11 @@
-import { useCart } from "../../../shared/context/useCart";
+import { useFacturaCart } from "../../../shared/context/useFacturaCart";
 
 type Props = {
   paymentMethod: string | null;
 };
 
 export default function CheckoutSummary({ paymentMethod }: Props) {
-  const { subtotal, cart } = useCart();
+  const { subtotal, cart } = useFacturaCart();
 
   const totalItems = cart.length;
 

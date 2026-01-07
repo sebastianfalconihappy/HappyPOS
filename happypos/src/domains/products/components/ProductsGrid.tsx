@@ -21,11 +21,33 @@ const normalizeText = (text: string) =>
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
 
+const extractStorageGB = (text: string): number | null => {
+  const matches = [...text.matchAll(/(\d+)\s*gb/gi)];
+  if (matches.length === 0) return null;
+
+  const values = matches.map((m) => Number(m[1]));
+  return Math.max(...values);
+};
+
+const getDiscountPercentage = (name: string): number => {
+  const upper = name.toUpperCase();
+
+  if (upper.includes("HOT")) return 15;
+  if (upper.includes("PRO")) return 10;
+
+  return 0;
+};
+
+const getDiscountedPrice = (price: number, discount: number): number => {
+  if (discount <= 0) return price;
+  return Math.round(price - (price * discount) / 100);
+};
+
 export default function ProductsGrid({ category }: Props) {
   const [loading, setLoading] = useState(false);
   const [allProducts, setAllProducts] = useState<Product[]>([]);
   const [search, setSearch] = useState("");
-  const [priceOrder, setPriceOrder] = useState<"asc" | "desc" | "">("");
+  const [priceOrder, setPriceOrder] = useState<"asc" | "desc" | "gb" | "">("");
   const [onlyInStock, setOnlyInStock] = useState(false);
   const [cache, setCache] = useState<Record<string, Product[]>>({});
   const { addToCart, cart } = useFacturaCart();
@@ -109,6 +131,16 @@ export default function ProductsGrid({ category }: Props) {
       result.sort((a, b) => b.price - a.price);
     }
 
+    if (priceOrder === "gb") {
+      result = result
+        .map((p) => ({
+          ...p,
+          _storageGB: extractStorageGB(p.name),
+        }))
+        .filter((p) => p._storageGB !== null)
+        .sort((a, b) => (a._storageGB as number) - (b._storageGB as number));
+    }
+
     return result;
   })();
 
@@ -156,6 +188,9 @@ export default function ProductsGrid({ category }: Props) {
           <option value="desc" className="bg-[#1B2333] text-white">
             Más caros
           </option>
+          <option value="gb" className="bg-[#1B2333] text-white">
+            Por GB
+          </option>
         </select>
 
         <label className="flex items-center gap-2 text-slate-700 dark:text-white/80">
@@ -189,11 +224,14 @@ export default function ProductsGrid({ category }: Props) {
         {filteredProducts.map((product) => {
           const isInCart = cart.some((p) => p.id === product.id);
 
+          const discount = getDiscountPercentage(product.name);
+          const finalPrice = getDiscountedPrice(product.price, discount);
+
           return (
             <div
               key={product.id}
               className="
-    rounded-xl p-4
+    rounded-xl p-4 relative
     bg-white dark:bg-white/5
     border border-slate-300 dark:border-white/10
     text-slate-900 dark:text-white
@@ -210,18 +248,38 @@ export default function ProductsGrid({ category }: Props) {
                 />
               </div>
 
+              {discount > 0 && (
+                <span className="absolute top-2 right-2 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-lg">
+                  -{discount}%
+                </span>
+              )}
+
               <h3 className="font-semibold text-slate-900 dark:text-white">
                 {product.name}
               </h3>
 
               <div className="flex justify-between mt-3">
-                <span className="font-bold text-indigo-600 dark:text-indigo-400">
-                  ${product.price}
-                </span>
+                {discount > 0 ? (
+                  <div className="flex flex-col">
+                    <span className="text-xs text-red-400 line-through">
+                      ${product.price}
+                    </span>
+                    <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                      ${finalPrice}
+                    </span>
+                  </div>
+                ) : (
+                  <span className="font-bold text-indigo-600 dark:text-indigo-400">
+                    ${product.price}
+                  </span>
+                )}
 
                 <button
                   onClick={() => {
-                    addToCart(product);
+                    addToCart({
+                      ...product,
+                      price: finalPrice,
+                    });
                     toast.success("Producto agregado al carrito");
                   }}
                   disabled={isInCart}

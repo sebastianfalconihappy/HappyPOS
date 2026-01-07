@@ -1,8 +1,8 @@
 import { Trash2 } from "lucide-react";
-import { useCart } from "../../../shared/context/useCart";
+import { useFacturaCart } from "../../../shared/context/useFacturaCart";
 
 export default function CheckoutProducts() {
-  const { cart, removeFromCart } = useCart();
+  const { cart, removeFromCart } = useFacturaCart();
 
   return (
     <div className="p-4 rounded-lg bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10">

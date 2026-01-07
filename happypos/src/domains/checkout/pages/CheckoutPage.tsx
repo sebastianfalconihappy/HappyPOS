@@ -5,11 +5,11 @@ import CheckoutProducts from "../components/CheckoutProducts";
 import CheckoutSummary from "../components/CheckoutSummary";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import { useCart } from "../../../shared/context/useCart";
 import { useState } from "react";
+import { useFacturaCart } from "../../../shared/context/useFacturaCart";
 
 export default function CheckoutPage() {
-  const { cart } = useCart();
+  const { cart } = useFacturaCart();
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
 

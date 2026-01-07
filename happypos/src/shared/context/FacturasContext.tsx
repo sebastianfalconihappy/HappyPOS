@@ -81,13 +81,20 @@ export function FacturasProvider({ children }: { children: ReactNode }) {
   };
 
   const eliminarFactura = (id: string) => {
-    setFacturas((prev) => prev.filter((f) => f.id !== id));
-
-    if (id === facturaActivaId) {
-      const restante = facturas.find((f) => f.id !== id);
-      setFacturaActivaId(restante ? restante.id : "");
+  setFacturas((prev) => {
+    if (prev.length <= 1) {
+      return prev;
     }
-  };
+
+    const nuevasFacturas = prev.filter((f) => f.id !== id);
+    if (id === facturaActivaId) {
+      setFacturaActivaId(nuevasFacturas[0].id);
+    }
+
+    return nuevasFacturas;
+  });
+};
+
 
   const setFacturaActiva = (id: string) => {
     setFacturaActivaId(id);

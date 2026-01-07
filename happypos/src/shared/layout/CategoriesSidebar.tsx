@@ -13,19 +13,21 @@ type Props = {
 const categories = [
   { id: "all", label: "Todos", icon: Layers },
   { id: "celularesmasv", label: "Celulares más vendidos", icon: Smartphone },
-  { id: "productosmasv", label: "Productos más vendidos", icon: Headphones },
+  { id: "combos", label: "Combos", icon: Headphones },
   { id: "celulares", label: "Celulares", icon: Smartphone },
   { id: "tablets", label: "Tablets", icon: Smartphone },
 ];
 
 const services = [
-  "Devoluciones verificadas",
-  "Refrescar promociones",
-  "Retiros - Mi Vecino",
-  "Depósitos - Mi Vecino",
-  "Anulaciones - Mi Vecino",
-  "Recibo - Mi Vecino",
-  "Abrir Pedido",
+  "Protección",
+  "Empaquetado",
+  "Ergonomia",
+  "Comunicaciones",
+  "Tecnología",
+  "Obsequios",
+  "Audio",
+  "Hogar",
+  "Almacenamiento"
 ];
 
 export default function CategoriesSidebar({ active, onChange }: Props) {
@@ -91,7 +93,7 @@ export default function CategoriesSidebar({ active, onChange }: Props) {
         >
           <div className="flex items-center gap-3">
             <Layers size={18} />
-            <span className="text-sm font-medium">Servicios</span>
+            <span className="text-sm font-medium">Más Categorias</span>
           </div>
 
           <span className="text-xs text-slate-500 dark:text-white/60">
