@@ -6,11 +6,19 @@ import type { Product } from "../../domains/products/types/Product";
 /* TIPOS */
 /* ============================= */
 
+export type CashPayment = {
+  recibido: number;
+  vuelto: number;
+  valido: boolean;
+};
+
 export type Factura = {
   id: string;
   items: Product[];
   creadaEn: Date;
+  cashPayment?: CashPayment; // 👈 NUEVO
 };
+
 
 type FacturasContextType = {
   facturas: Factura[];
@@ -24,6 +32,7 @@ type FacturasContextType = {
   agregarProducto: (product: Product) => void;
   quitarProducto: (productId: string) => void;
   subtotal: number;
+  setCashPayment: (cash: CashPayment) => void;
 };
 
 /* ============================= */
@@ -123,6 +132,19 @@ export function FacturasProvider({ children }: { children: ReactNode }) {
     );
   };
 
+  
+
+  const setCashPayment = (cash: CashPayment) => {
+  setFacturas((prev) =>
+    prev.map((f) =>
+      f.id === facturaActivaId
+        ? { ...f, cashPayment: cash }
+        : f
+    )
+  );
+};
+
+
   return (
     <FacturasContext.Provider
       value={{
@@ -134,6 +156,7 @@ export function FacturasProvider({ children }: { children: ReactNode }) {
         agregarProducto,
         quitarProducto,
         subtotal,
+        setCashPayment
       }}
     >
       {children}

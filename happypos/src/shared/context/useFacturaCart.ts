@@ -1,12 +1,14 @@
 import { useFacturas } from "./useFacturas";
 import type { Product } from "../../domains/products/types/Product";
 
+
 export function useFacturaCart() {
   const {
     facturaActiva,
     agregarProducto,
     quitarProducto,
     subtotal,
+    setCashPayment,
   } = useFacturas();
 
   return {
@@ -14,5 +16,7 @@ export function useFacturaCart() {
     addToCart: (product: Product) => agregarProducto(product),
     removeFromCart: (id: string) => quitarProducto(id),
     subtotal,
+    setCashPayment,
+    facturaActiva,
   };
 }

@@ -5,9 +5,15 @@ type Props = {
 };
 
 export default function CheckoutSummary({ paymentMethod }: Props) {
-  const { subtotal, cart } = useFacturaCart();
+  const { subtotal, cart, facturaActiva } = useFacturaCart();
 
   const totalItems = cart.length;
+
+  const cashPayment = facturaActiva?.cashPayment;
+
+  const isCashValid =
+    paymentMethod !== "EFECTIVO" ||
+    (cashPayment && cashPayment.valido === true);
 
   return (
     <div className="p-4 rounded-lg bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10 sticky top-20">
@@ -33,7 +39,7 @@ export default function CheckoutSummary({ paymentMethod }: Props) {
 
       {/* CONTINUAR */}
       <button
-        disabled={cart.length === 0 || !paymentMethod}
+        disabled={cart.length === 0 || !paymentMethod || !isCashValid}
         className={`
     w-full mt-3 py-2 rounded-lg text-sm font-semibold transition
     ${
@@ -45,6 +51,11 @@ export default function CheckoutSummary({ paymentMethod }: Props) {
       >
         Continuar
       </button>
+      {paymentMethod === "EFECTIVO" && !isCashValid && (
+        <p className="mt-2 text-xs text-red-500">
+          El monto recibido no cubre el total de la venta
+        </p>
+      )}
       {!paymentMethod && cart.length > 0 && (
         <p className="mt-2 text-s text-red-500">
           Selecciona un método de pago para continuar
