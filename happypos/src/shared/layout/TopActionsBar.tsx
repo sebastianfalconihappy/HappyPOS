@@ -19,7 +19,7 @@ export default function TopActionsBar({
   onSelectFactura,
   onNuevaFactura,
   onEliminarFactura,
-  onConsultaSolicitud,
+  // onConsultaSolicitud,
   cotizar,
   onToggleCotizar,
 }: Props) {
@@ -87,7 +87,7 @@ export default function TopActionsBar({
           Cotizar
         </label>
 
-        {/* 🧾 Consulta */}
+        {/* 🧾 Consulta
         <button
           onClick={onConsultaSolicitud}
           className="
@@ -99,7 +99,7 @@ export default function TopActionsBar({
           "
         >
           🧾 Consulta Solicitud
-        </button>
+        </button> */}
 
         {/* ➕ Nueva factura */}
         <button
