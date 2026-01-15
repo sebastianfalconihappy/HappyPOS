@@ -2,7 +2,7 @@ import DashboardLayout from "../../../shared/layout/DashboardLayout";
 import ProductsGrid from "../components/ProductsGrid";
 import TopActionsBar from "../../../shared/layout/TopActionsBar";
 import { useState } from "react";
-import ConsultaSolicitudModal from "../../../shared/layout/ConsultaSolicitudModal";
+import ConsultaClienteModal from "../../../shared/layout/ConsultaClienteModal";
 import { useFacturas } from "../../../shared/context/useFacturas";
 
 export default function DashboardPage() {
@@ -30,7 +30,7 @@ export default function DashboardPage() {
               if (!facturaActiva) return;
               eliminarFactura(facturaActiva.id);
             }}
-            onConsultaSolicitud={() => setOpenConsulta(true)}
+            onConsultaCliente={() => setOpenConsulta(true)}
             cotizar={cotizar}
             onToggleCotizar={setCotizar}
           />
@@ -42,7 +42,7 @@ export default function DashboardPage() {
           <ProductsGrid category={category} />
 
           {/* 🪟 MODAL */}
-          <ConsultaSolicitudModal
+          <ConsultaClienteModal
             open={openConsulta}
             onClose={() => setOpenConsulta(false)}
           />

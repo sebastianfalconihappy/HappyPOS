@@ -8,7 +8,7 @@ type Props = {
   onNuevaFactura: () => void;
   onEliminarFactura: () => void;
 
-  onConsultaSolicitud: () => void;
+  onConsultaCliente: () => void;
   cotizar: boolean;
   onToggleCotizar: (value: boolean) => void;
 };
@@ -19,7 +19,7 @@ export default function TopActionsBar({
   onSelectFactura,
   onNuevaFactura,
   onEliminarFactura,
-  // onConsultaSolicitud,
+  onConsultaCliente,
   cotizar,
   onToggleCotizar,
 }: Props) {
@@ -86,10 +86,8 @@ export default function TopActionsBar({
           />
           Cotizar
         </label>
-
-        {/* 🧾 Consulta
         <button
-          onClick={onConsultaSolicitud}
+          onClick={onConsultaCliente}
           className="
             px-4 py-2
             rounded-lg
@@ -98,8 +96,8 @@ export default function TopActionsBar({
             transition
           "
         >
-          🧾 Consulta Solicitud
-        </button> */}
+          🧾 Consulta Cliente
+        </button>
 
         {/* ➕ Nueva factura */}
         <button

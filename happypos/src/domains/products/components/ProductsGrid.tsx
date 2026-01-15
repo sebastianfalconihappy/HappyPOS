@@ -68,7 +68,7 @@ export default function ProductsGrid({ category }: Props) {
       let data: Product[] = [];
 
       if (category === "celulares") {
-        data = await getCellPhones("HJLEMA");
+        data = await getCellPhones("HPMOLINA");
       }
 
       if (category === "tablets") {
@@ -81,7 +81,7 @@ export default function ProductsGrid({ category }: Props) {
 
       if (category === "all") {
         const [phones, tablets] = await Promise.all([
-          getCellPhones("HJLEMA"),
+          getCellPhones("HPMOLINA"),
           getTablets("HJLEMA"),
         ]);
         data = [...phones, ...tablets];
