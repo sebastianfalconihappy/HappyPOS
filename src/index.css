@@ -1,0 +1,111 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* ============================= */
+/* SCROLLBAR PERSONALIZADA */
+/* ============================= */
+
+::-webkit-scrollbar {
+  width: 10px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: #cbd5e1; 
+  border-radius: 8px;
+  border: 2px solid transparent;
+  background-clip: content-box;
+}
+
+/* Hover */
+::-webkit-scrollbar-thumb:hover {
+  background-color: #94a3b8; 
+}
+
+/* ============================= */
+/* MODO OSCURO */
+/* ============================= */
+.dark ::-webkit-scrollbar-thumb {
+  background-color: #334155; 
+}
+
+.dark ::-webkit-scrollbar-thumb:hover {
+  background-color: #475569; 
+}
+
+/* ============================= */
+/* ANIMACIONES */
+/* ============================= */
+
+@keyframes fadeScaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+.animate-fade-scale-in {
+  animation: fadeScaleIn 0.2s ease-out;
+}
+
+
+/* ============================= */
+/* CALCULADORA */
+/* ============================= */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-4px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.15s ease-out;
+}
+
+.btn-calc {
+  padding: 1.25rem;
+  min-height: 3.75rem;
+  font-size: 1.1rem;
+  font-weight: 500;
+  border-radius: 0.75rem;
+  background: rgba(100, 116, 139, 0.2);
+  transition: background 0.15s, transform 0.05s;
+}
+
+.btn-calc:hover {
+  background: rgba(100, 116, 139, 0.4);
+}
+
+.btn-calc:active {
+  transform: scale(0.96);
+}
+
+
+
+@keyframes slideFade {
+  from {
+    opacity: 0;
+    transform: translateY(-8px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-slide-fade {
+  animation: slideFade 0.18s ease-out;
+}
