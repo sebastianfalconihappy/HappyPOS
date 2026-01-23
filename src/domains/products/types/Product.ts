@@ -9,4 +9,6 @@ export interface Product {
   stock: number;
   image: string;
   category: ProductCategory;
+    description?: string;
+
 }

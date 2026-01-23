@@ -15,12 +15,24 @@ export default function CheckoutPage() {
   const navigate = useNavigate();
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
   const [showSummaryCalculator, setShowSummaryCalculator] = useState(false);
+  const [vendedor, setVendedor] = useState<string>("");
 
   useEffect(() => {
     if (cart.length === 0) {
       navigate("/dashboard", { replace: true });
     }
   }, [cart.length, navigate]);
+
+  const VENDEDORES = [
+    "CHIQUIN LARA ANDY FERNANDO",
+    "LEMA TENELMA JESSICA ESTEFANIA",
+    "ASIMBAYA CAGUANO MONICA SARAHI",
+    "GUALOTUÑA OCHOA DANNY SEBASTIAN",
+    "RIVERA VELA ALEXIS DARIO",
+    "PALOMO AULIS MARIA VERONICA",
+    "ATENCIA CABRERA CARLOS ANDRES",
+  ];
+
   return (
     <>
       {/* HEADER GLOBAL */}
@@ -37,13 +49,43 @@ export default function CheckoutPage() {
             </p>
           </div>
 
-          {/* BOTÓN REGRESAR */}
+          {/* SELECT VENDEDOR + BOTONES */}
           <div className="flex items-center gap-2">
+            {/* VENDEDOR */}
+            <select
+              value={vendedor}
+              onChange={(e) => setVendedor(e.target.value)}
+              className="
+      h-8
+      text-xs
+      px-2
+      rounded-md
+      border border-slate-300
+      bg-white
+      text-slate-700
+      dark:bg-[#0B1220]
+      dark:text-white/80
+      dark:border-white/10
+      focus:outline-none
+      focus:ring-1
+      focus:ring-blue-500
+    "
+            >
+              <option value="">👤 Seleccionar vendedor</option>
+              {VENDEDORES.map((v) => (
+                <option key={v} value={v}>
+                  {v}
+                </option>
+              ))}
+            </select>
+
+            {/* REGRESAR */}
             <button
               onClick={() => navigate(-1)}
               className="
+      h-8
       text-xs font-medium
-      px-3 py-1.5
+      px-3
       rounded-md
       border border-red-300
       text-red-600
@@ -59,12 +101,13 @@ export default function CheckoutPage() {
               ← Regresar
             </button>
 
+            {/* CALCULADORA */}
             {paymentMethod !== null && paymentMethod !== "EFECTIVO" && (
               <button
                 onClick={() => setShowSummaryCalculator((prev) => !prev)}
                 className="
-        text-xs
-        px-2 py-1.5
+        h-8
+        px-2
         rounded-md
         border border-slate-300
         dark:border-white/10

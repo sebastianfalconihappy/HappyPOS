@@ -3,6 +3,7 @@ import {
   getCellPhones,
   getTablets,
   getProductosMasVendidos,
+  getCombos,
 } from "../api/products.services";
 import type { Product } from "../types/Product";
 
@@ -79,6 +80,10 @@ export default function ProductsGrid({ category }: Props) {
         data = await getProductosMasVendidos("HJLEMA");
       }
 
+      if (category === "combos") {
+        data = await getCombos("HPMOLINA");
+      }
+
       if (category === "all") {
         const [phones, tablets] = await Promise.all([
           getCellPhones("HPMOLINA"),
@@ -115,7 +120,10 @@ export default function ProductsGrid({ category }: Props) {
         (p) =>
           normalizeText(p.name).includes(term) ||
           normalizeText(p.code).includes(term) ||
-          normalizeText(p.imei).includes(term)
+          normalizeText(p.imei).includes(term) ||
+          (p.category === "combos" &&
+            p.description &&
+            normalizeText(p.description).includes(term)),
       );
     }
 
@@ -257,6 +265,12 @@ export default function ProductsGrid({ category }: Props) {
               <h3 className="font-semibold text-slate-900 dark:text-white">
                 {product.name}
               </h3>
+
+              {product.category === "combos" && product.description && (
+                <p className="mt-1 text-xs text-slate-500 dark:text-white/60 line-clamp-3">
+                  Incluye: {product.description}
+                </p>
+              )}
 
               <div className="flex justify-between mt-3">
                 {discount > 0 ? (

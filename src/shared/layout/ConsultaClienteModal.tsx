@@ -40,6 +40,12 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
   const [data, setData] = useState<any[] | null>(null);
+  const resetModal = () => {
+    setCedula("");
+    setData(null); // o [] si ya normalizaste
+    setError(null);
+    setLoading(false);
+  };
 
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
@@ -72,7 +78,7 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
       });
 
       console.log("📦 RESPONSE DATA COMPLETO:", response.data);
-      setData(response.data.operacion);
+      setData(response.data.operacion ?? []);
     } catch (err) {
       console.error("❌ Error consulta cliente", err);
       setError("No se pudo consultar la información del cliente");
@@ -84,7 +90,10 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center">
       <div
-        onClick={onClose}
+        onClick={() => {
+          resetModal();
+          onClose();
+        }}
         className="absolute inset-0 bg-black/60 backdrop-blur-sm"
       />
 
@@ -92,7 +101,10 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-lg font-semibold">🧾 Consulta de Cliente</h2>
           <button
-            onClick={onClose}
+            onClick={() => {
+              resetModal();
+              onClose();
+            }}
             className="w-8 h-8 rounded-lg hover:bg-slate-200 dark:hover:bg-slate-800"
           >
             ✕
@@ -117,7 +129,19 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
             </div>
           )}
 
-          {data && (
+          {data && data.length === 0 && (
+            <div className="mt-4 rounded-xl border border-green-300 bg-green-50 dark:bg-green-900/20 p-4 text-center">
+              <p className="text-green-700 dark:text-green-300 font-semibold">
+                🟢 Cliente nuevo
+              </p>
+              <p className="mt-1 text-sm text-green-600 dark:text-green-400">
+                No registra compras ni créditos previos. Puede continuar con una
+                venta normal.
+              </p>
+            </div>
+          )}
+
+          {data && data.length > 0 && (
             <div className="mt-4 flex flex-col gap-3">
               {data.map((op, index) => (
                 <div
@@ -128,8 +152,8 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
       op.estadoOperacion === "AL DIA"
         ? "border-green-300 bg-green-50 dark:bg-green-900/20"
         : op.estadoOperacion === "ANULADO"
-        ? "border-red-300 bg-red-50 dark:bg-red-900/20"
-        : "border-slate-300 bg-slate-100 dark:bg-slate-800"
+          ? "border-red-300 bg-red-50 dark:bg-red-900/20"
+          : "border-slate-300 bg-slate-100 dark:bg-slate-800"
     }
   `}
                 >
