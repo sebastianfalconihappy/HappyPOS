@@ -1,6 +1,5 @@
 import Header from "../../../shared/layout/Header";
 import PaymentMethods from "../components/PaymentMethods";
-import ExtraOptions from "../components/ExtraOptions";
 import CheckoutProducts from "../components/CheckoutProducts";
 import CheckoutSummary from "../components/CheckoutSummary";
 import { useEffect } from "react";
@@ -9,6 +8,7 @@ import { useState } from "react";
 import { useFacturaCart } from "../../../shared/context/useFacturaCart";
 import CashPaymentCalculator from "../components/CashPaymentCalculator";
 import SummaryCalculator from "../components/SummaryCalculator";
+import PrePaymentModal from "../components/PrePaymentModal";
 
 export default function CheckoutPage() {
   const { cart } = useFacturaCart();
@@ -16,6 +16,12 @@ export default function CheckoutPage() {
   const [paymentMethod, setPaymentMethod] = useState<string | null>(null);
   const [showSummaryCalculator, setShowSummaryCalculator] = useState(false);
   const [vendedor, setVendedor] = useState<string>("");
+  const [showPrePayment, setShowPrePayment] = useState(false);
+  const [canal, setCanal] = useState<string>("");
+
+  useEffect(() => {
+    setShowPrePayment(true);
+  }, []);
 
   useEffect(() => {
     if (cart.length === 0) {
@@ -79,6 +85,40 @@ export default function CheckoutPage() {
               ))}
             </select>
 
+            {/* CANAL */}
+            <select
+              value={canal}
+              onChange={(e) => setCanal(e.target.value)}
+              className="
+    h-8
+    text-xs
+    px-2
+    rounded-md
+    border border-slate-300
+    bg-white
+    text-slate-700
+    dark:bg-[#0B1220]
+    dark:text-white/80
+    dark:border-white/10
+    focus:outline-none
+    focus:ring-1
+    focus:ring-blue-500
+  "
+            >
+              <option value="">📢 Canal</option>
+              <option>Referidos</option>
+              <option>Segunda Compras</option>
+              <option>Redes Sociales</option>
+              <option>Tráfico Normal</option>
+              <option>Mensajería</option>
+              <option>Volanteo</option>
+              <option>Recover</option>
+              <option>Ruta Propia</option>
+              <option>CRM</option>
+              <option>Pichincha Mi Vecino</option>
+              <option>Pauta Empresa</option>
+            </select>
+
             {/* REGRESAR */}
             <button
               onClick={() => navigate(-1)}
@@ -131,7 +171,6 @@ export default function CheckoutPage() {
               selected={paymentMethod}
               onSelect={setPaymentMethod}
             />
-            <ExtraOptions />
             <CashPaymentCalculator visible={paymentMethod === "EFECTIVO"} />
             <CheckoutProducts />
           </div>
@@ -145,6 +184,18 @@ export default function CheckoutPage() {
             )}
           </div>
         </div>
+
+        {showPrePayment && (
+          <PrePaymentModal
+            vendedor={vendedor}
+            setVendedor={setVendedor}
+            onClose={() => setShowPrePayment(false)}
+            onConfirm={() => {
+              setShowPrePayment(false);
+              // luego aquí navegaremos al pago real
+            }}
+          />
+        )}
       </main>
     </>
   );

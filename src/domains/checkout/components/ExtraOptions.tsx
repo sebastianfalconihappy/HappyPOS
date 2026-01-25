@@ -1,18 +1,6 @@
 export default function ExtraOptions() {
   return (
     <div className="p-4 rounded-lg bg-white dark:bg-white/5 border border-slate-300 dark:border-white/10">
-      <div className="grid grid-cols-2 gap-3">
-        {/* GARANTÍA */}
-        <div>
-          <label className="block text-xs font-medium mb-1">
-            Garantía
-          </label>
-          <select className="w-full px-2 py-1.5 text-sm rounded-md bg-slate-100 dark:bg-[#1B2333] border border-slate-300 dark:border-white/10">
-            <option>ASISTENCIA PLUS</option>
-            <option>NO APLICA</option>
-          </select>
-        </div>
-
         {/* CANAL */}
         <div>
           <label className="block text-xs font-medium mb-1">
@@ -33,6 +21,5 @@ export default function ExtraOptions() {
           </select>
         </div>
       </div>
-    </div>
   );
 }
