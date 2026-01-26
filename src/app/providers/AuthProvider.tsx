@@ -44,6 +44,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   function logout() {
+    sessionStorage.removeItem("offer_shown");
     setUser(null);
     setBranch(null);
     setCashRegister(null);
@@ -51,9 +52,7 @@ export function AuthProvider({ children }: { children: ReactNode }) {
   }
 
   return (
-    <AuthContext.Provider
-      value={{ user, branch, cashRegister, login, logout }}
-    >
+    <AuthContext.Provider value={{ user, branch, cashRegister, login, logout }}>
       {children}
     </AuthContext.Provider>
   );

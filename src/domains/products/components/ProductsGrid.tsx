@@ -6,6 +6,7 @@ import {
   getCombos,
 } from "../api/products.services";
 import type { Product } from "../types/Product";
+import { mockAccessories } from "../api/mockAccessories";
 
 type Props = {
   category: string;
@@ -82,6 +83,10 @@ export default function ProductsGrid({ category }: Props) {
 
       if (category === "combos") {
         data = await getCombos("HPMOLINA");
+      }
+
+      if (category === "accesorios") {
+        data = mockAccessories;
       }
 
       if (category === "all") {

@@ -61,6 +61,20 @@ export default {
             transform: "scale(1) translateY(0)",
           },
         },
+
+        confettiFall: {
+          "0%": {
+            transform: "translateY(-100px) rotate(0deg)",
+            opacity: 0,
+          },
+          "10%": {
+            opacity: 1,
+          },
+          "100%": {
+            transform: "translateY(600px) rotate(360deg)",
+            opacity: 0,
+          },
+        },
       },
 
       /* ======================
@@ -80,6 +94,7 @@ export default {
         scaleIn: "scaleIn 0.25s ease-out",
         pulseSoft: "pulseSoft 2s infinite",
         offerPop: "offerPop 0.45s cubic-bezier(0.34, 1.56, 0.64, 1)",
+        confetti: "confettiFall 1.8s ease-out forwards",
 
       },
     },

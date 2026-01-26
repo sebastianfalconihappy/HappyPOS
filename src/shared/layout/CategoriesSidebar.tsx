@@ -1,9 +1,5 @@
 import { useState } from "react";
-import {
-  Smartphone,
-  Headphones,
-  Layers,
-} from "lucide-react";
+import { Smartphone, Headphones, Layers, Plug } from "lucide-react";
 
 type Props = {
   active: string;
@@ -12,10 +8,12 @@ type Props = {
 
 const categories = [
   { id: "all", label: "Todos", icon: Layers },
+  { id: "TOP Recomendado", label: "TOP Recomendado", icon: Layers },
   { id: "celularesmasv", label: "Celulares más vendidos", icon: Smartphone },
   { id: "combos", label: "Combos", icon: Headphones },
   { id: "celulares", label: "Celulares", icon: Smartphone },
   { id: "tablets", label: "Tablets", icon: Smartphone },
+  { id: "accesorios", label: "Accesorios", icon: Plug },
 ];
 
 const services = [
@@ -27,7 +25,7 @@ const services = [
   "Obsequios",
   "Audio",
   "Hogar",
-  "Almacenamiento"
+  "Almacenamiento",
 ];
 
 export default function CategoriesSidebar({ active, onChange }: Props) {

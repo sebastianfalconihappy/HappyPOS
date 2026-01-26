@@ -1,5 +1,9 @@
 import { useEffect, useState } from "react";
 import axios from "axios";
+import { useFacturaCart } from "../context/useFacturaCart";
+import { useNavigate } from "react-router-dom";
+import type { Product } from "../../domains/products/types/Product";
+import { getProductosMasVendidos } from "../../domains/products/api/products.services";
 
 type Props = {
   open: boolean;
@@ -47,14 +51,17 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
     setLoading(false);
   };
 
+  const { addToCart } = useFacturaCart();
+  const navigate = useNavigate();
+  const [recommended, setRecommended] = useState<Product[]>([]);
+  const [loadingRecom, setLoadingRecom] = useState(false);
+
   useEffect(() => {
     document.body.style.overflow = open ? "hidden" : "auto";
     return () => {
       document.body.style.overflow = "auto";
     };
   }, [open]);
-
-  if (!open) return null;
 
   const handleConsultar = async () => {
     if (!validarCedulaEcuatoriana(cedula)) {
@@ -86,6 +93,36 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
       setLoading(false);
     }
   };
+
+  const clienteAlDia =
+    data?.some(
+      (op) =>
+        op.estadoOperacion === "AL DIA" || op.estadoOperacion === "VIGENTE",
+    ) ?? false;
+
+  useEffect(() => {
+    if (!clienteAlDia) return;
+
+    const loadRecommendations = async () => {
+      try {
+        setLoadingRecom(true);
+
+        const productos = await getProductosMasVendidos("ADMIN");
+
+        setRecommended(productos.slice(0, 2)); // solo 2 para prueba
+      } catch (error) {
+        console.error("Error cargando recomendaciones", error);
+      } finally {
+        setLoadingRecom(false);
+      }
+    };
+
+    loadRecommendations();
+  }, [clienteAlDia]);
+
+  if (!open) {
+    return null;
+  }
 
   return (
     <div className="fixed inset-0 z-[999] flex items-center justify-center">
@@ -176,6 +213,90 @@ export default function ConsultaClienteModal({ open, onClose }: Props) {
                   </div>
                 </div>
               ))}
+            </div>
+          )}
+
+          {clienteAlDia && (
+            <div className="mt-4 rounded-2xl border border-indigo-500/40 bg-indigo-50 dark:bg-indigo-900/20 p-4 animate-offerPop">
+              <p className="text-sm font-semibold text-indigo-700 dark:text-indigo-300">
+                ⭐ Recomendado para ti
+              </p>
+
+              <p className="text-sm text-slate-700 dark:text-slate-300 mt-1">
+                Como estás <b>al día</b> y ya cuentas con un dispositivo, te
+                recomendamos complementar tu compra con:
+              </p>
+
+              {/* LOADING */}
+              {loadingRecom && (
+                <p className="mt-3 text-sm text-slate-500">
+                  Cargando recomendaciones...
+                </p>
+              )}
+
+              {/* PRODUCTOS */}
+              {!loadingRecom && (
+                <div className="grid grid-cols-2 gap-4 mt-4">
+                  {recommended.map((product) => (
+                    <div
+                      key={product.id}
+                      className="
+              rounded-2xl
+              border border-indigo-500/30
+              bg-white/95 dark:bg-[#0B1220]
+              p-3
+              flex flex-col
+            "
+                    >
+                      {/* IMAGEN */}
+                      <div className="flex justify-center mb-2">
+                        <div className="w-24 h-24 rounded-xl bg-black/10 dark:bg-white/5 overflow-hidden">
+                          <img
+                            src={product.image}
+                            alt={product.name}
+                            className="w-full h-full object-contain"
+                          />
+                        </div>
+                      </div>
+
+                      {/* TEXTO */}
+                      <p className="text-sm font-semibold leading-snug text-center line-clamp-3">
+                        {product.name}
+                      </p>
+
+                      <p className="text-xs text-slate-500 text-center mt-1">
+                        Código: {product.code}
+                      </p>
+
+                      <p className="text-base font-bold text-indigo-600 text-center mt-2">
+                        ${product.price.toFixed(2)}
+                      </p>
+
+                      {/* BOTÓN */}
+                      <button
+                        onClick={() => {
+                          addToCart(product);
+                          onClose();
+                          navigate("/dashboard");
+                        }}
+                        className="
+                mt-3
+                w-full
+                rounded-lg
+                bg-indigo-600
+                text-white
+                py-2
+                text-sm font-medium
+                hover:bg-indigo-500
+                transition
+              "
+                      >
+                        ➕ Añadir al carrito
+                      </button>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
           )}
 

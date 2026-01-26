@@ -1,9 +1,10 @@
 import DashboardLayout from "../../../shared/layout/DashboardLayout";
 import ProductsGrid from "../components/ProductsGrid";
 import TopActionsBar from "../../../shared/layout/TopActionsBar";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import ConsultaClienteModal from "../../../shared/layout/ConsultaClienteModal";
 import { useFacturas } from "../../../shared/context/useFacturas";
+import OfferSplashModal from "../../../shared/layout/OfferSplashModal";
 
 export default function DashboardPage() {
   const [openConsulta, setOpenConsulta] = useState(false);
@@ -15,6 +16,20 @@ export default function DashboardPage() {
     crearFactura,
     eliminarFactura,
   } = useFacturas();
+  const [showOffer, setShowOffer] = useState(false);
+
+  useEffect(() => {
+    const alreadyShown = sessionStorage.getItem("offer_shown");
+
+    if (!alreadyShown) {
+      const timer = setTimeout(() => {
+        setShowOffer(true);
+        sessionStorage.setItem("offer_shown", "true");
+      }, 12000);
+
+      return () => clearTimeout(timer);
+    }
+  }, []);
 
   return (
     <DashboardLayout>
@@ -45,6 +60,11 @@ export default function DashboardPage() {
           <ConsultaClienteModal
             open={openConsulta}
             onClose={() => setOpenConsulta(false)}
+          />
+
+          <OfferSplashModal
+            open={showOffer}
+            onClose={() => setShowOffer(false)}
           />
         </div>
       )}
