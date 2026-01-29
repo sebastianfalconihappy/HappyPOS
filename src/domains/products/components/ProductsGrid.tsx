@@ -7,6 +7,7 @@ import {
 } from "../api/products.services";
 import type { Product } from "../types/Product";
 import { mockAccessories } from "../api/mockAccessories";
+import { mockTopRecomendado } from "../api/mockTopRecomendado";
 
 type Props = {
   category: string;
@@ -79,6 +80,10 @@ export default function ProductsGrid({ category }: Props) {
 
       if (category === "celularesmasv") {
         data = await getProductosMasVendidos("HJLEMA");
+      }
+      
+      if (category === "TOP Recomendado") {
+        data = mockTopRecomendado;
       }
 
       if (category === "combos") {
