@@ -1,6 +1,6 @@
 export interface ApiProduct {
-  Codigo: string;
-  Descripcion: string;
+  codigo: string;
+  descripcion: string;
   imei: string;
   stock: number;
   precio: number;
@@ -17,8 +17,8 @@ export interface ApiProductsResponse {
 
 // 👉 Producto dentro de un combo
 export interface ApiComboProducto {
-  Codigo: string;
-  Descripcion: string;
+  codigo: string;
+  descripcion: string;
   imei: { imei: string }[] | [];
   stock: number;
   precio: number;

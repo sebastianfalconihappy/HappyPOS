@@ -5,9 +5,9 @@ const PLACEHOLDER_IMAGE = "/src/assets/images/placeholder.png";
 
 export function mapApiProductToProduct(api: ApiProduct): Product {
   return {
-    id: `${api.Codigo}-${api.imei}`,
-    name: api.Descripcion,
-    code: api.Codigo,
+    id: `${api.codigo}-${api.imei}`,
+    name: api.descripcion,
+    code: api.codigo,
     imei: api.imei,
     price: api.precio,
     stock: api.stock,

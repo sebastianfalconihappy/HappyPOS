@@ -18,11 +18,13 @@ import { useFacturaCart } from "../../../shared/context/useFacturaCart";
 import toast from "react-hot-toast";
 
 const PLACEHOLDER_IMAGE = "/src/assets/images/placeholder.jpg";
-const normalizeText = (text: string) =>
-  text
+const normalizeText = (text?: string) => {
+  if (!text) return "";
+  return text
     .toLowerCase()
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "");
+};
 
 const extractStorageGB = (text: string): number | null => {
   const matches = [...text.matchAll(/(\d+)\s*gb/gi)];
@@ -33,6 +35,8 @@ const extractStorageGB = (text: string): number | null => {
 };
 
 const getDiscountPercentage = (name: string): number => {
+  if (!name) return 0;
+
   const upper = name.toUpperCase();
 
   if (upper.includes("HOT")) return 15;
@@ -81,7 +85,7 @@ export default function ProductsGrid({ category }: Props) {
       if (category === "celularesmasv") {
         data = await getProductosMasVendidos("HJLEMA");
       }
-      
+
       if (category === "TOP Recomendado") {
         data = mockTopRecomendado;
       }

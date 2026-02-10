@@ -51,14 +51,14 @@ export async function getCombos(usuario: string): Promise<Product[]> {
   return response.data.data.map((combo, index) => {
     const stockReal = Math.min(...combo.productos.map((p) => p.stock));
 
-    const codigos = combo.productos.map((p) => p.Codigo).join(" + ");
+    const codigos = combo.productos.map((p) => p.codigo).join(" + ");
 
     const imeis = combo.productos
       .flatMap((p) => p.imei)
       .map((i) => i.imei)
       .join(" + ");
 
-    const nombres = combo.productos.map((p) => p.Descripcion).join(" + ");
+    const nombres = combo.productos.map((p) => p.descripcion).join(" + ");
 
     return {
       id: `combo-${index}`,
